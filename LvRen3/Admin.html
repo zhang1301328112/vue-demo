@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta content="" name="description" />
+    <meta content="webthemez" name="author" />
+    <title>BRILLIANT Free Bootstrap Admin Template</title>
+    <!-- Bootstrap Styles-->
+    <link href="css/admin/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="css/admin/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="css/admin/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="css/admin/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="css/admin/cssCharts.css"/> 
+<script src="js/angular.min.js"></script>
+     <script src="https://cdn.staticfile.org/angular.js/1.7.6/angular.min.js"></script>
+    <script>
+
+        var url = location.href;
+        var n1 = url.length;//地址的总长度10
+        var n2 = url.indexOf("=");//取得=号的位置
+        var id = decodeURI(url.substr(n2 + 1, n1 - n2));
+        var app = angular.module("myApp", []);
+        app.controller("myCtrl", function ($scope, $http) {
+            $http({
+                method: 'post',
+                url: 'ashx/Admin.ashx',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return str.join("&");
+                }
+            }).then(function (da) {
+                $scope.arr = da.data;
+            })
+            //删除
+            $scope.delete = function (index) {
+                //confirm("确定要删除吗？")
+                alert(index)
+                $http({
+                    method: 'post',
+                    url: 'ashx/AdminUserDelete.ashx',
+                    data: { "cid": index },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj) {
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        }
+                        return str.join("&");
+                    }
+                }).success(function (req) {
+                    console.log(req)
+                    if (req == 1) {
+                        alert("删除成功！")
+                        //刷新
+                        $http({
+                            method: 'post',
+                            url: 'ashx/Admin.ashx',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            transformRequest: function (obj) {
+                                var str = [];
+                                for (var p in obj) {
+                                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                }
+                                return str.join("&");
+                            }
+                        }).then(function (da) {
+                            $scope.arr = da.data;
+                        })
+                    }
+                })
+            }
+            //查询
+            $scope.sousuo = function () {
+                $scope.jieshou = {
+                    tel1: $scope.tianxie
+                }
+                $http({
+                    method: 'post',
+                    url: 'ashx/AUMHSelect.ashx',
+                    data: $scope.jieshou,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj) {
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        }
+                        return str.join("&");
+                    }
+                }).then(function (da) {
+                    $scope.arr = da.data;
+                })
+            }
+            //封停
+            $scope.fenghao = function (index) {
+                alert(index)
+                $http({
+                    method: 'post',
+                    url: 'ashx/AUUpdate.ashx',
+                    data: { "cid": index },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj) {
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        }
+                        return str.join("&");
+                    }
+                }).success(function (req) {
+                    console.log(req)
+                    if (req == 1) {
+                        alert("封号成功！")
+                        //刷新
+                        $http({
+                            method: 'post',
+                            url: 'ashx/Admin.ashx',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            transformRequest: function (obj) {
+                                var str = [];
+                                for (var p in obj) {
+                                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                }
+                                return str.join("&");
+                            }
+                        }).then(function (da) {
+                            $scope.arr = da.data;
+                        })
+                    }
+                })
+            }
+        })
+    </script>
+    <style>
+        #page-inner table th {
+            text-align:center;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 欢迎登录</strong></a>
+				
+		<div id="sideNav" href="">
+		<i class="fa fa-bars icon"></i> 
+		</div>
+            </div>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a class="active-menu" href="Admin.html"><i class="fa fa-dashboard"></i> 用户管理</a>
+                    </li>
+                    <li>
+                        <a href="ui-elements.html"><i class="fa fa-desktop"></i> 酒店信息</a>
+                    </li> 
+                    <li>
+                        <a href="tab-panel.html"><i class="fa fa-qrcode"></i> 景点信息</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+      
+		<div id="page-wrapper">
+		  <div class="header"> 
+                        <h1 class="page-header">
+                            用户信息 <small>Welcome 10081
+                                <input type="text" ng-model="tianxie"/>&nbsp;&nbsp;<input type="button" class="btn btn-sm" value="搜索" ng-click="sousuo()"/>
+                                 </small>
+                            
+                        </h1>
+								
+		</div>
+            <div id="page-inner" >
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>昵称</th>
+                            <th>电话</th>
+                            <th>余额</th>
+                            <th>积分</th>
+                            <th>账号状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in arr">
+                            <td>{{x.CID}}</td>
+                            <td>{{x.LikeName}}</td>
+                            <td>{{x.TelNo}}</td>
+                            <td>{{x.salary}}</td>
+                            <td>{{x.creadit}}</td>
+                            <td>{{x.ban}}</td>
+                            <td><input type="button" value="封号" ng-click="fenghao(x.CID)"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="删除" ng-click="delete(x.CID)"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="js/admin/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="js/admin/bootstrap.min.js"></script>
+	 
+    <!-- Metis Menu Js -->
+    <script src="js/admin/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="js/admin/raphael-2.1.0.min.js"></script>
+    <script src="js/admin/morris.js"></script>
+	
+	
+	<script src="js/admin/easypiechart.js"></script>
+	<script src="js/admin/easypiechart-data.js"></script>
+	
+	 <script src="js/admin/jquery.chart.js"></script>
+	
+    <!-- Custom Js -->
+    <script src="js/admin/custom-scripts.js"></script>
+
+      
+    <!-- Chart Js -->
+    <script type="text/javascript" src="js/admin/Chart.min.js"></script>  
+    <script type="text/javascript" src="js/admin/chartjs.js"></script> 
+
+</body>
+
+</html>

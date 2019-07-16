@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"/>
+    <script src="../JS/axios.min.js"></script>
+    <script src="../JS/vue.min.js"></script>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <style>
+       .el-button--danger {
+           list-style:none;
+           text-decoration:none;
+        }
+        table tr th, td { 
+        text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" >
+
+    <div style="height:50px;width:200px; float:left;">
+        <select class="el-select-dropdown" v-model="id1"  >
+            <option class="el-option" v-bind:value="0">
+              --请选择--
+            </option>
+            <option  class="el-option" v-for="goods in names"  v-bind:value="goods.TypeID"  >
+                {{goods.TypeName}}
+            </option>
+        </select>
+
+                <button class="el-button plain" v-on:click="selectByid(id1)" style="margin-left:170px;">查找<i class="el-icon-search el-icon--right"></i></button>
+    </div>
+
+    <table class="el-table"
+    style="width: 100% ;text-align:center;">
+        <thead>
+            <tr>
+                <th class="el-table-column" style="text-align:center; width:20%">编号</th>
+                <th class="el-table-column" style="text-align:center;">类别</th>
+                <th class="el-table-column" style="text-align:center;">操作</th>
+            </tr> 
+        </thead>
+        <tbody style="text-align:center;">
+            <tr v-for="good in getInvestorsInfo">
+                <td class="el-table-column" style="text-align:center;">{{good.TypeID}}</td>
+                <td id="TypeName" v-show="visibale2" v-model="good.TypeName" class="el-table-column" style="text-align:center;">{{good.TypeName}}
+                </td>
+                <td v-show="visibale"  class="el-table-column" style="text-align:center;">  <input v-model="typename" style="border:1px solid black;height:30px;width:120px;margin:auto;padding-top:10px; text-align:center;"/></td>
+                <td class="el-table-column" style="text-align:center;">
+                    <!--<button class="el-button plain" v-on:click="" >删除<i class="el-icon-delete-solid el-icon--right"></i></button>-->
+               <button class="el-button plain"  v-show="visibale2"  v-on:click="showdata(good.TypeID)" >编辑<i class="el-icon-edit el-icon--right"></i></button>
+                    <button class="el-button plain "  v-show="visibale" v-on:click="close"  >取消<i class="el-icon-close el-icon--right"></i></button>
+             <button class="el-button plain "  v-show="visibale" v-on:click="Updatedata(good.TypeID)"  >保存<i class="el-icon-folder el-icon--right"></i></button></td>
+            </tr>
+              
+        </tbody>
+    </table>
+      
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                visibale:false,
+                visibale2:true,
+                getInvestorsInfo: [],
+                names:[],
+                id1:0,
+                typename:"",
+                geturl:"../ashx/GetTypes.ashx",
+                UpdateUrl:"../ashx/DeleteTypes.ashx",
+                getByidurl:"../ashx/selectTypeByID.ashx",
+                form: {
+                    inerstor: ''
+                }
+            },
+            created: function () {
+                this.InitData();
+            },
+            mounted: function () {
+
+            },
+            methods: {
+                InitData: function () {
+                    //ajax
+                    axios.get(this.geturl).then(
+                        //请求服务器成功的回调函数
+                        result=>{this.getInvestorsInfo = result.data,
+                        this.names=result.data
+                        }
+                        ).catch(
+                       //请求服务器异常的回调函数
+                        error=>{console.log(error)}
+                        );
+                },
+                showdata:function(id){
+                    this.visibale=!this.visibale;
+                    this.visibale2=!this.visibale2;
+                    axios.get(this.getByidurl,{
+                        params:{ids:id,name:this.typename}
+                    }).then(
+                          //请求服务器成功的回调函数
+                          result=>{this.getInvestorsInfo = result.data,this.typename=this.getInvestorsInfo[0].TypeName }
+                          ).catch(
+                         //请求服务器异常的回调函数
+                          error=>{console.log(error)}
+                          );
+                },
+                Updatedata: function (id) {
+                    axios.get(
+                        this.UpdateUrl,
+                        {
+                            params:{ids:id,name:this.typename}
+                        }).then(
+                        function(res){
+                            if(res.data=="ok"){
+                                alert("修改成功")
+                                location.href="GoodsType.html";
+                                this.InitData();
+                        }
+                               }
+                                ).catch(
+                                    err=>{console.log(err)}
+                                );
+                },
+                selectByid:function(id){
+                    axios.get(this.getByidurl,{
+                        params:{ids:id}
+                    }).then(
+                          //请求服务器成功的回调函数
+                          result=>{this.getInvestorsInfo = result.data
+                          }
+                          ).catch(
+                         //请求服务器异常的回调函数
+                          error=>{console.log(error)}
+                          );
+                },
+                close:function(){
+                    location.href="GoodsType.html";
+                }
+            }
+        });
+    </script>
+</body>
+     
+</html>

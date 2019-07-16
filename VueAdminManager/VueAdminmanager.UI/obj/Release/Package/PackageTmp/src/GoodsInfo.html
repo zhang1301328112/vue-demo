@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+          <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"/>
+    <script src="../JS/axios.min.js"></script>
+    <script src="../JS/vue.min.js"></script>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <style>
+         table tr th, td { 
+             width:15%;
+        text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <ul>
+            <li><input class="el-button" type="button" value="添加" style="background:pink" /></li>
+        </ul>
+       
+    </div>
+    <div id="app">
+
+         <table class="el-table" id="tables"
+    style="width: 100% ;text-align:center;" >
+        <thead>
+            <tr>
+                <th class="el-table-column" style="text-align:center;">商品</th>
+                <th class="el-table-column" style="text-align:center;">图片</th>
+                 <th class="el-table-column" style="text-align:center;">类别</th>
+                  <th class="el-table-column" style="text-align:center;">存放地点</th>
+                <th class="el-table-column" style="text-align:center;">操作</th>
+            </tr> 
+        </thead>
+        <tbody style="text-align:center;">
+            <tr v-for="good in getInvestorsInfo">
+                <td v-model="good.GoodsName" v-show="visibale2" class="el-table-column" style="text-align:center;">{{good.GoodsName}}
+                    </td>
+                <td  class="el-table-column" v-show="visibale"><input style="width:100px;text-align:center; margin-left:80px;" type="text"  v-model="GoodsName"/>
+                </td>
+                <td  style="text-align:center"><img style="width:100px;height:100px;" v-bind:src="good.img | ccc" /></td>
+                <td v-model="good.TypeName"  class="el-table-column" style="text-align:center;">{{good.TypeName}}</td>
+                <td v-model="good.CFPlaces" v-show="visibale2"  class="el-table-column" style="text-align:center;">{{good.CFPlaces}}</td>
+                <td  class="el-table-column" v-show="visibale"><input style="width:100px;text-align:center; margin-left:80px;" type="text"  v-model="CFPlaces"/>
+                </td>
+                <td class="el-table-column" style="text-align:center;">
+                    <!--<button class="el-button plain" v-on:click="" >删除<i class="el-icon-delete-solid el-icon--right"></i></button>-->
+               <button class="el-button plain" v-show="visibale2"  v-on:click="showdata(good.GoodsID)" >编辑<i class="el-icon-edit el-icon--right"></i></button>
+             <button class="el-button plain "  v-show="visibale"  v-on:click="Updatedata(good.GoodsID)"  >保存<i class="el-icon-folder el-icon--right"></i></button>
+                    <button class="el-button plain "  v-show="visibale"  v-on:click="Deletedata(good.GoodsID)"  >删除<i class="el-icon-close el-icon--right"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+ 
+   <script>
+       Vue.filter("ccc",function(value){
+           return "../attres/imgs/"+value;
+       })
+       new Vue({
+           el: "#app",
+           data: {
+               getInvestorsInfo: [],
+               visibale:false,
+               visibale2:true,
+               geturl:"/../ashx/GoodsInfo.ashx",
+               geiidUrl:"/../ashx/GoodsInfoByID.ashx",
+               updateUrl:"/../ashx/UpdateGoodsInfo.ashx",
+               Deleteurl:"/../ashx/DeleteGoodsInfo.ashx",
+               GoodsName:"",
+               CFPlaces:"",
+               form: {
+                   inerstor: ''
+               }
+           },
+           created: function () {
+               this.InitData();
+           },  
+           mounted: function () {
+
+           },
+           methods: {
+               InitData: function () {
+                   axios.get(this.geturl,{
+                       params:{page:5,rows:4}
+                   }
+                       ).then(
+                       //请求服务器成功的回调函数
+                       result=>{this.getInvestorsInfo = result.data}
+                       ).catch(
+                      //请求服务器异常的回调函数
+                       error=>{console.log(error)}
+                       );
+               },
+               showdata:function(id){
+                   this.visibale=!this.visibale;
+                   this.visibale2=!this.visibale2;
+                   axios.get(this.geiidUrl,
+                       {
+                           params:{ids:id,name:this.GoodsName,places:this.CFPlaces}
+                       }).then(
+                       //请求服务器成功的回调函数
+                       result=>{this.getInvestorsInfo = result.data,this.GoodsName=this.getInvestorsInfo[0].GoodsName,this.CFPlaces=this.getInvestorsInfo[0].CFPlaces}
+                       ).catch(
+                      //请求服务器异常的回调函数
+                       error=>{console.log(error)}
+                       );
+               },
+               Updatedata:function(id)
+               {
+                   axios.get(this.updateUrl,{
+                       params:{ids:id,name:this.GoodsName,places:this.CFPlaces}
+                   }).then(
+                        function(res){
+                            if(res.data=="ok"){
+                                alert("修改成功")
+                                location.href="GoodsInfo.html";
+                                this.InitData();
+                            }
+                        }
+                                ).catch(
+                                    err=>{console.log(err)}
+                                );
+                   
+               },
+               Deletedata:function(id)
+               {
+                   axios.get(
+                            this.Deleteurl,
+                            {
+                                params:{ids:id},
+                             
+                            }).then(
+                                       function(res){if(res.data=="ok"){
+                                           location.href="GoodsInfo.html";
+                                         
+                                       }}
+                                       ).catch(
+                                           err=>{console.log(err)}
+                                       );
+               }
+      }
+       });
+   </script>
+</body>
+</html>

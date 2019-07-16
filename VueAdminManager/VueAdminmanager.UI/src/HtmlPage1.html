@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+     <script src="../JS/axios.min.js"></script>
+</head>
+<body>
+    <form action="../ashx/InsertGoodsInfo.ashx"  method="post" name="ff" id="fff" enctype="multipart/form-data">
+            
+              <p>
+                  
+                  <label>商品:</label>
+                  <input type="text" name="GoodsName" />
+                  </p>
+            <p>
+                  <label>图片:</label>
+               <input type="file" name="img" />
+                             <!--<input type="file" name="name" v-model="good.img"/>-->
+            </p>
+                
+            <p>
+                 <label>类别:</label>
+                        <select  name="TypeID" >
+            <option  v-bind:value="0">
+              --请选择--
+            </option>
+            <option v-for="good in goods"  v-bind:value="good.TypeID" >
+                {{good.TypeName}}
+            </option>
+                           
+        </select>
+            </p>
+             <p>
+                  <label>存放地点:</label>
+            <select   name="CFID">
+            <option  v-bind:value="0">
+              --请选择--
+            </option>
+            <option   v-for="good in cf"  v-bind:value="good.CFID"  >
+                {{good.CFPlaces}}
+            </option>
+        </select>
+            </p>
+            <p>
+                <input type="submit" value="添加商品" />
+            </p>
+        </form>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="../JS/jquery.js"></script>
+    <title></title>
+    <script>
+        $(function () {
+            $("input[type=button]").click(function () {
+                var form = new FormData($("#form1")[0]);
+                $.ajax({
+                    url: "../ashx/InsertGoodsInfo.ashx",
+                    data: form,
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data == "ok") {
+                            alert(1)
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+    <form id="form1" enctype="multipart/form-data">
+        <input  type="file" name="files"/>
+        <input type="button" value="111" />
+    </form>
+</body>
+</html>

@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta content="" name="description" />
+    <meta content="webthemez" name="author" />
+    <title>Bootstrap Admin Template</title>
+	<!-- Bootstrap Styles-->
+    <link href="css/Admin/bootstrap.css" rel="stylesheet" />
+     <!-- FontAwesome Styles-->
+    <link href="css/Admin/font-awesome.css" rel="stylesheet" />
+        <!-- Custom Styles-->
+    <link href="css/Admin/custom-styles.css" rel="stylesheet" />
+     <!-- Google Fonts-->
+   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="js/angular.min.js"></script>
+     <script src="https://cdn.staticfile.org/angular.js/1.7.6/angular.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCtrl", function ($scope, $http) {
+            $http({
+                method: 'post',
+                url: 'ashx/AHotel/elements.ashx',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return str.join("&");
+                }
+            }).then(function (da) {
+                $scope.arr = da.data;
+            })
+            //修改
+            $scope.xiugai = function (index)
+            {
+                location.href = "Update.html";
+            }
+            //下架
+            $scope.delete = function (index) {
+                //confirm("确定要删除吗？")
+                $http({
+                    method: 'post',
+                    url: 'ashx/AHotel/Delete.ashx',
+                    data: { "goodsID": index },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj) {
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        }
+                        return str.join("&");
+                    }
+                }).success(function (req) {
+                    console.log(req)
+                    if (req == 1) {
+                        alert("下架成功！")
+                        //刷新
+                        $http({
+                            method: 'post',
+                            url: 'ashx/AHotel/elements.ashx',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            transformRequest: function (obj) {
+                                var str = [];
+                                for (var p in obj) {
+                                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                }
+                                return str.join("&");
+                            }
+                        }).then(function (da) {
+                            $scope.arr = da.data;
+                        })
+                    }
+                })
+            }
+            //查询
+            $scope.sousuo = function () {
+                $scope.jieshou = {
+                    tel1: $scope.tianxie
+                }
+                $http({
+                    method: 'post',
+                    url: 'ashx/AHotel/Select.ashx',
+                    data: $scope.jieshou,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj) {
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        }
+                        return str.join("&");
+                    }
+                }).then(function (da) {
+                    $scope.arr = da.data;
+                })
+            }
+
+            $scope.add = function () {
+                
+            }
+        })
+    </script>
+    <script>
+        $(function () {
+            $("#y-top").find("input[type=button]").click(function () {
+                if ($("#y-top").find("input[type=file]").val() != "") {
+                    var form = new FormData($("#form1")[0]);
+                    $.ajax({
+                        url: "ashx/AHotel/FileUpload.ashx",
+                        data: form,
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data == "ok") {
+                                alert("上传成功！");
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert("请选择图片")
+                }
+            })
+        })
+    </script>
+    <style>
+        #page-inner table th {
+            text-align:center;
+        }
+        .black_overlay{ 
+            display: none; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.8; 
+            opacity:.80; 
+            filter: alpha(opacity=88); 
+        } 
+        .white_content { 
+            display: none; 
+            position: absolute; 
+            top: 25%; 
+            left: 25%; 
+            width: 55%; 
+            height: 55%; 
+            padding: 20px; 
+            border: 10px solid orange; 
+            background-color: white; 
+            z-index:1002; 
+            overflow: auto; 
+        }
+        #y-top {
+            padding-top:60px;
+            width:60%;
+            margin:auto;
+            text-align:center;
+            padding-left:200px;
+        }
+        #y-bottom {
+            width:60%;
+            margin:auto;
+            margin-top:30px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 欢迎管理员10081</strong></a>
+                <div id="sideNav" href="">
+                    <i class="fa fa-bars icon"></i>
+                </div>
+            </div>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a href="Admin.html"><i class="fa fa-dashboard"></i>用户管理</a>
+                    </li>
+                    <li>
+                        <a href="ui-elements.html" class="active-menu"><i class="fa fa-desktop"></i>酒店信息</a>
+                    </li>
+                    <li>
+                        <a href="tab-panel.html"><i class="fa fa-qrcode"></i> 景点信息</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div class="header">
+                <h1 class="page-header">酒店信息 <small><input type="text" ng-model="tianxie"/>&nbsp;&nbsp;<input type="button" class="btn btn-sm" value="搜索" ng-click="sousuo()"/></small>
+                </h1>
+
+            </div>
+            <div id="page-inner">
+                <input type="button" value="添加商品" ng-click="xiugai()" />
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead>
+                        <tr>
+                            <th>酒店编号</th>
+                            <th>名称</th>
+                            <th>价格</th>
+                            <th>地区</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in arr">
+                            <td>{{x.GoodsID}}</td>
+                            <td>{{x.Goods}}</td>
+                            <td>{{x.Price}}/晚</td>
+                            <td>{{x.Addr}}</td>
+                            <td><input type="button" value="下架" ng-click="delete(x.GoodsID)"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+
+    
+    <div id="fade" class="black_overlay"></div>
+
+    <script src="js/Admin/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="js/Admin/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="js/Admin/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <script src="js/Admin/custom-scripts.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+您 Web 项目的发布/打包进程将使用此文件。您可以通过编辑此 MSBuild 文件
+来自定义该进程的行为。若要了解与此相关的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="ashx/CFplacesInfo.ashx">
+      <publishTime>06/10/2019 21:11:13</publishTime>
+    </File>
+    <File Include="ashx/DeleteCFplaces.ashx">
+      <publishTime>06/10/2019 21:24:37</publishTime>
+    </File>
+    <File Include="ashx/DeleteGoodsInfo.ashx">
+      <publishTime>06/07/2019 17:48:04</publishTime>
+    </File>
+    <File Include="ashx/DeleteTypes.ashx">
+      <publishTime>05/13/2019 14:30:23</publishTime>
+    </File>
+    <File Include="ashx/DeleteWithShop.ashx">
+      <publishTime>05/20/2019 23:12:19</publishTime>
+    </File>
+    <File Include="ashx/GetTypes.ashx">
+      <publishTime>05/07/2019 11:21:39</publishTime>
+    </File>
+    <File Include="ashx/GetWithShop.ashx">
+      <publishTime>05/20/2019 14:49:32</publishTime>
+    </File>
+    <File Include="ashx/GoodsInfo.ashx">
+      <publishTime>05/24/2019 16:01:14</publishTime>
+    </File>
+    <File Include="ashx/GoodsInfoByID.ashx">
+      <publishTime>06/07/2019 16:54:21</publishTime>
+    </File>
+    <File Include="ashx/InsertCFplaces.ashx">
+      <publishTime>06/10/2019 21:28:08</publishTime>
+    </File>
+    <File Include="ashx/InsertWithShop.ashx">
+      <publishTime>05/20/2019 22:36:33</publishTime>
+    </File>
+    <File Include="ashx/Logincheck.ashx">
+      <publishTime>05/13/2019 17:16:17</publishTime>
+    </File>
+    <File Include="ashx/Personal.ashx">
+      <publishTime>05/09/2019 15:50:44</publishTime>
+    </File>
+    <File Include="ashx/selectTypeByID.ashx">
+      <publishTime>05/13/2019 15:17:53</publishTime>
+    </File>
+    <File Include="ashx/UpdateGoodsInfo.ashx">
+      <publishTime>06/07/2019 17:13:34</publishTime>
+    </File>
+    <File Include="ashx/UpdatePwd.ashx">
+      <publishTime>05/31/2019 17:29:37</publishTime>
+    </File>
+    <File Include="ashx/UpdateUser.ashx">
+      <publishTime>05/09/2019 18:01:23</publishTime>
+    </File>
+    <File Include="attres/img/key.png">
+      <publishTime>05/08/2019 11:43:21</publishTime>
+    </File>
+    <File Include="attres/img/lock_icon_copy.png">
+      <publishTime>05/08/2019 11:43:21</publishTime>
+    </File>
+    <File Include="attres/img/logo.png">
+      <publishTime>05/08/2019 11:43:21</publishTime>
+    </File>
+    <File Include="attres/img/puff.svg">
+      <publishTime>05/08/2019 11:43:21</publishTime>
+    </File>
+    <File Include="attres/img/Starry.jpg">
+      <publishTime>05/08/2019 11:43:21</publishTime>
+    </File>
+    <File Include="attres/img/tick.png">
+      <publishTime>05/08/2019 11:43:21</publishTime>
+    </File>
+    <File Include="attres/img/user_icon_copy.png">
+      <publishTime>05/08/2019 11:43:21</publishTime>
+    </File>
+    <File Include="attres/imgs/1.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/2.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/3.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/4.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/5.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/6.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/7.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/8.jpg">
+      <publishTime>05/22/2019 15:12:22</publishTime>
+    </File>
+    <File Include="attres/imgs/u=1788846238,2005805837&amp;fm=26&amp;gp=0.jpg">
+      <publishTime>05/08/2019 08:19:08</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>05/07/2019 22:19:41</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>05/30/2012 15:51:10</publishTime>
+    </File>
+    <File Include="bin/VueAdminmanager.UI.dll">
+      <publishTime>06/10/2019 23:13:02</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/EntityFramework.resources.dll">
+      <publishTime>05/07/2019 22:19:51</publishTime>
+    </File>
+    <File Include="css/admin.css">
+      <publishTime>05/10/2019 08:09:05</publishTime>
+    </File>
+    <File Include="css/bootstrap.css">
+      <publishTime>05/07/2019 20:00:43</publishTime>
+    </File>
+    <File Include="css/element.css">
+      <publishTime>05/05/2019 18:36:21</publishTime>
+    </File>
+    <File Include="css/index.css">
+      <publishTime>05/05/2019 18:38:49</publishTime>
+    </File>
+    <File Include="css/pagination.css">
+      <publishTime>05/24/2019 17:19:56</publishTime>
+    </File>
+    <File Include="css/pintuer.css">
+      <publishTime>05/10/2019 08:09:05</publishTime>
+    </File>
+    <File Include="JS/axios.min.js">
+      <publishTime>05/15/2019 14:20:38</publishTime>
+    </File>
+    <File Include="JS/element.js">
+      <publishTime>05/05/2019 18:34:52</publishTime>
+    </File>
+    <File Include="JS/gVerify.js">
+      <publishTime>05/08/2019 11:47:02</publishTime>
+    </File>
+    <File Include="JS/jquery.js">
+      <publishTime>05/10/2019 08:08:48</publishTime>
+    </File>
+    <File Include="JS/pagination.js">
+      <publishTime>05/24/2019 17:20:04</publishTime>
+    </File>
+    <File Include="JS/pintuer.js">
+      <publishTime>05/10/2019 08:08:48</publishTime>
+    </File>
+    <File Include="JS/qs.js">
+      <publishTime>05/09/2019 21:15:41</publishTime>
+    </File>
+    <File Include="JS/vue.js">
+      <publishTime>05/15/2019 14:20:38</publishTime>
+    </File>
+    <File Include="JS/vue.min.js">
+      <publishTime>05/05/2019 18:36:44</publishTime>
+    </File>
+    <File Include="Model/Model1.Context.tt">
+      <publishTime>05/22/2019 15:27:21</publishTime>
+    </File>
+    <File Include="Model/Model1.edmx.diagram">
+      <publishTime>05/22/2019 15:33:06</publishTime>
+    </File>
+    <File Include="Model/Model1.tt">
+      <publishTime>05/22/2019 15:27:21</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>05/07/2019 22:33:01</publishTime>
+    </File>
+    <File Include="src/CFPlaces.html">
+      <publishTime>06/10/2019 21:41:29</publishTime>
+    </File>
+    <File Include="src/department.html">
+      <publishTime>05/16/2019 16:53:04</publishTime>
+    </File>
+    <File Include="src/GoodsInfo.html">
+      <publishTime>06/10/2019 21:50:50</publishTime>
+    </File>
+    <File Include="src/GoodsType.html">
+      <publishTime>05/31/2019 16:45:21</publishTime>
+    </File>
+    <File Include="src/Index.html">
+      <publishTime>06/10/2019 22:56:21</publishTime>
+    </File>
+    <File Include="src/InsertCFplaces.html">
+      <publishTime>06/10/2019 21:40:42</publishTime>
+    </File>
+    <File Include="src/InsertWithShop.html">
+      <publishTime>05/21/2019 10:06:50</publishTime>
+    </File>
+    <File Include="src/Login.html">
+      <publishTime>06/10/2019 22:56:39</publishTime>
+    </File>
+    <File Include="src/PerSonals.html">
+      <publishTime>05/16/2019 15:50:46</publishTime>
+    </File>
+    <File Include="src/UpdatePassword.html">
+      <publishTime>05/31/2019 18:05:07</publishTime>
+    </File>
+    <File Include="src/WithShop.html">
+      <publishTime>05/22/2019 10:22:39</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>06/10/2019 23:16:35</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

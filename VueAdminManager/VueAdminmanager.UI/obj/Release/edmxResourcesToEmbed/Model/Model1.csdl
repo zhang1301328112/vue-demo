@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MYAdminManagerModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MYAdminManagerEntities1" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="AdminUser" EntityType="MYAdminManagerModel.AdminUser" />
+    <EntitySet Name="Buyer" EntityType="MYAdminManagerModel.Buyer" />
+    <EntitySet Name="CFplace" EntityType="MYAdminManagerModel.CFplace" />
+    <EntitySet Name="department" EntityType="MYAdminManagerModel.department" />
+    <EntitySet Name="Goods" EntityType="MYAdminManagerModel.Goods" />
+    <EntitySet Name="GoodsType" EntityType="MYAdminManagerModel.GoodsType" />
+    <AssociationSet Name="FK__Goods__CFID__2D27B809" Association="MYAdminManagerModel.FK__Goods__CFID__2D27B809">
+      <End Role="CFplace" EntitySet="CFplace" />
+      <End Role="Goods" EntitySet="Goods" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Goods__TypeID__2C3393D0" Association="MYAdminManagerModel.FK__Goods__TypeID__2C3393D0">
+      <End Role="GoodsType" EntitySet="GoodsType" />
+      <End Role="Goods" EntitySet="Goods" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AdminUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="UserPhone" Type="String" MaxLength="11" Unicode="true" FixedLength="false" />
+    <Property Name="UserPwd" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Buyer">
+    <Key>
+      <PropertyRef Name="BuyID" />
+    </Key>
+    <Property Name="BuyID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="BuyerName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="HZTime" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="CFplace">
+    <Key>
+      <PropertyRef Name="CFID" />
+    </Key>
+    <Property Name="CFID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="CFPlaces" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Goods" Relationship="MYAdminManagerModel.FK__Goods__CFID__2D27B809" FromRole="CFplace" ToRole="Goods" />
+  </EntityType>
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="DepartID" />
+    </Key>
+    <Property Name="DepartID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Departments" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Goods">
+    <Key>
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="GoodsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="CFID" Type="Int32" />
+    <Property Name="GoodsName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="img" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="CFplace" Relationship="MYAdminManagerModel.FK__Goods__CFID__2D27B809" FromRole="Goods" ToRole="CFplace" />
+    <NavigationProperty Name="GoodsType" Relationship="MYAdminManagerModel.FK__Goods__TypeID__2C3393D0" FromRole="Goods" ToRole="GoodsType" />
+  </EntityType>
+  <EntityType Name="GoodsType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Goods" Relationship="MYAdminManagerModel.FK__Goods__TypeID__2C3393D0" FromRole="GoodsType" ToRole="Goods" />
+  </EntityType>
+  <Association Name="FK__Goods__CFID__2D27B809">
+    <End Role="CFplace" Type="MYAdminManagerModel.CFplace" Multiplicity="0..1" />
+    <End Role="Goods" Type="MYAdminManagerModel.Goods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFplace">
+        <PropertyRef Name="CFID" />
+      </Principal>
+      <Dependent Role="Goods">
+        <PropertyRef Name="CFID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Goods__TypeID__2C3393D0">
+    <End Role="GoodsType" Type="MYAdminManagerModel.GoodsType" Multiplicity="0..1" />
+    <End Role="Goods" Type="MYAdminManagerModel.Goods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="Goods">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

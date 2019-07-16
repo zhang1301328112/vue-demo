@@ -1,0 +1,245 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <title>LuxuryHotel a Hotel Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Rubik:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+      <link href="fonts/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+      <script src="fonts/js/swiper.min.js"></script>
+      <script src="https://cdn.staticfile.org/angular.js/1.7.6/angular.min.js"></script>
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="css/style.css">
+      <script type="text/javascript">  
+          var app = angular.module("Myapp", []);
+          var url = location.href;
+          var n1 = url.length;//地址的总长度10
+          var n2 = url.indexOf("=");//取得=号的位置
+          var id = decodeURI(url.substr(n2 + 1, n1 - n2));
+      
+          app.controller("Myctrl", function ($scope, $http) {
+
+              $http({
+                  method: 'post',
+                  url: "ashx/BuyGoods.ashx",
+                  data: { "id": id },
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                  transformRequest: function (obj) {
+                      var str = [];
+                      for (var p in obj) {
+                          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                      }
+                      return str.join("&");
+                  }
+              }).then(function (da) {
+                  if (id != url) {
+                      $scope.arrs = da.data;
+                      $scope.num = 1;
+                      $scope.Price = $scope.arrs[0].Price;
+                      $scope.Goods = $scope.arrs[0].Goods;
+                  }
+              })
+              $scope.jian = function () {
+                  
+                  $scope.num -= 1;
+                  $scope.arrs[0].num = $scope.num;
+                  $scope.Price = $scope.arrs[0].Price;
+                  $scope.Price = $scope.arrs[0].Price * $scope.arrs[0].num
+
+              }
+              $scope.jia = function ()
+              {
+                  
+                  $scope.num += 1;
+                  $scope.arrs[0].num = $scope.num;
+                  $scope.Price = $scope.arrs[0].Price;
+                  $scope.Price = $scope.arrs[0].Price * $scope.arrs[0].num
+              }
+              $scope.bbb = function (index) {
+                  $scope.data2 =
+                      {
+                          goodsid: $scope.arrs[0].GoodsID,
+                          goodsname: $scope.arrs[0].Goods,
+                          goodsimg: $scope.arrs[0].img,
+                          goodsprice: $scope.Price,
+                          goodsnum:$scope.arrs[0].num
+                      }
+                  $http({
+                          method: 'post',
+                          url: "ashx/InsertOrder.ashx",
+                          data: $scope.data2,
+                          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                          transformRequest: function (obj) {
+                              var str = [];
+                              for (var p in obj) {
+                                  str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                              }
+                              return str.join("&");
+                          }
+                      })
+                .then(function (req) {
+                        if (req.data == 1) {
+                            alert("添加成功！")
+                        }
+                        else {
+                            alert("添加失败")
+                        }
+                }, function () {
+                    alert("错");
+                })
+              }
+          })
+          window.onload = function () {
+              var swiper = new Swiper('.swiper-container', {
+                  autoplay: false,
+                  speed: 1000,
+                  autoplayDisableOnInteraction: false,
+                  loop: true,
+                  centeredSlides: true,
+                  slidesPerView: 2,
+                  pagination: '.swiper-pagination',
+                  paginationClickable: true,
+                  prevButton: '.swiper-button-prev',
+                  nextButton: '.swiper-button-next',
+                  onInit: function (swiper) {
+                      swiper.slides[2].className = "swiper-slide swiper-slide-active";
+                  },
+                  breakpoints: {
+                      668: {
+                          slidesPerView: 1,
+                      }
+                  }
+              });
+          }
+
+
+</script>
+  </head>
+  <body ng-app="Myapp">
+    
+    <header role="banner">
+     
+      <nav class="navbar navbar-expand-md navbar-dark bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="index.html"><img src="images/logo.png" style="width:200px;height:100px;" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse navbar-light" id="navbarsExample05" >
+            <ul class="navbar-nav ml-auto pl-lg-5 pl-0">
+               <li class="nav-item">
+                <a class="nav-link " href="index.html">首页</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="rooms.html">酒店</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="blog.html">旅游</a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- END header -->
+
+
+
+    <section  data-stellar-background-ratio="0.5" style="background-image: url(images/big_image_1.jpg); height:100px;">
+    </section>
+    <!-- END section -->
+
+
+    <section class="site-section" >
+      <div class="container" ng-controller="Myctrl">
+        <div class="row" ng-repeat="x in arrs">
+              <div style="float:right;width:50%">
+                  <img src="images/{{x.img}}" style="width:500px;height:300px;" />
+              </div>
+            <div class="media d-block room mb-0" style="width:30%; float:left">
+              
+              <div>
+                <h3 class="mt-0"><a href="#">{{x.Goods}}</a></h3>
+                <ul class="room-specs">
+                  <li><span class="ion-ios-people-outline"></span>2位客人</li>
+                  <li><span class="ion-ios-crop">价格：</span>{{x.Price}}</li>
+                </ul>
+                <p>{{x.Jieshao}} </p>
+                  <p><input type="button" value="-" ng-click="jian()"/><input type="text" value="{{num}}" /><input type="button" value="+" ng-click="jia()" /></p>
+                  <p><span class="ion-ios-crop">总价：</span>{{Price}}</p>
+                <p><a class="btn btn-primary btn-sm" ng-click="bbb($index)">付款</a></p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+   
+   
+
+    <section class="section-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/img_5.jpg);">
+      <div class="container">
+        <div class="row justify-content-center align-items-center intro">
+          <div class="col-md-9 text-center element-animate">
+            <h2>精品酒店</h2>
+            <p class="lead mb-5">热门酒店推荐</p>
+            <div class="btn-play-wrap"><embed src="//player.video.iqiyi.com/e20d5d00e4709b3400072bc064402884/0/0/w_19rw8iejmp.swf-albumId=11393690509-tvId=11393690509-isPurchase=0-cnId=undefined" allowFullScreen="true" quality="high" width="50%" height="" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash" <!--class="btn-play popup-vimeo "-->></embed><span class="ion-ios-play"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+   
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-4">
+            <h3>电话热线</h3>
+            <p>24小时打给我们</p>
+            <p class="lead"><a href="tel://">+ 1 332 3093 323</a></p>
+          </div>
+          <div class="col-md-4">
+            <h3>联系我们</h3>
+            <p>跟随我们最新消息</p>
+            <p>
+              <a href="#" class="pl-0 p-3"><span class="fa fa-facebook"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-twitter"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-instagram"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-vimeo"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-youtube-play"></span></a>
+            </p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+        </div>
+      </div>
+    </footer>
+    <!-- END footer -->
+    
+    <!-- loader -->
+    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-migrate-3.0.0.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

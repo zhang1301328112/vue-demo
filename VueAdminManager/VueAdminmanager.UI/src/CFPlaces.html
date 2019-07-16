@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+         <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"/>
+    <script src="../JS/axios.min.js"></script>
+    <script src="../JS/vue.min.js"></script>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <title></title>
+    <style>
+        .el-tag {
+             margin-left:20px;
+    margin-top:10px;
+     float:left; 
+     height:150px; 
+     width:300px; 
+     border-radius: 4px;
+        }
+            .el-tag:hover {
+                 box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.1);
+            }
+        p {
+          font-size:27px;
+          text-align:center;
+           padding:0px;
+           margin-top:55px;
+
+        }
+            p > a {
+                font-size:17px;
+                padding-left:20px;
+                text-decoration:none;
+            }
+    </style>
+</head>
+<body>
+    <div id="app">
+    <span class="el-tag" v-for="g in getInvestorsInfo" ><p>{{g.CFPlaces}}<a href="#" class="el-icon-circle-close" v-on:click="deleteCFplaces(g.CFID)"></a></p></span>
+          <button class="el-tag" v-on:click="ADDCFplace">
+            <span class="el-icon-plus">
+        </button>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                getInvestorsInfo:[],
+                geturl:"../ashx/CFplacesInfo.ashx",
+                Deleteurl:"../ashx/DeleteCFplaces.ashx",
+                form: {
+                    inerstor: ''
+                }
+            },
+            created: function(){
+                this.InitData();
+
+            },
+            mounted: function () {
+
+            },
+            methods:{
+                InitData: function () {
+                    //ajax
+                    axios.get(this.geturl).then(
+                       //请求服务器成功的回调函数
+                       result=>{this.getInvestorsInfo = result.data},
+                       ).catch(
+                      //请求服务器异常的回调函数
+                       error=>{console.log(error)}
+                       );
+
+                },
+                ADDCFplace:function(id)
+                {
+                    location.href="InsertCFplaces.html";
+                },
+                deleteCFplaces:function(id)
+                {
+                    axios.get(
+                            this.Deleteurl,
+                            {
+                                params:{ids:id},
+                             
+                            }).then(
+                                       function(res){if(res.data=="ok"){
+                                           location.href="CFPlaces.html";
+                                         
+                                       }}
+                                       ).catch(
+                                           err=>{console.log(err)}
+                                       );
+                }
+            }
+        })
+    </script>
+</body>
+   
+</html>

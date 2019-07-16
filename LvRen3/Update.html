@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <style>
+        * {
+       margin:0px;
+       padding:0px;
+             }
+        #headimg_main {
+        width:1280px;
+        height:600px;
+        margin:auto;
+        box-shadow:0 0 5px #808080;
+        }
+        #headimg_head {
+         width:100%;
+        height:18%;
+        margin-top:3%;padding-top:3%;
+        text-align:center; 
+        border-bottom:1px solid #808080 ;
+        
+        }
+        #headimg_conntent {
+        padding-top:3%;
+        width:100%;
+        height:75%;
+        
+        }
+      
+         button{
+            margin-top:30px;
+            width:200px;
+            height:50px;
+        }
+  
+        #lookheadimg {
+            width:200px;
+            height:200px;
+            border-radius:50% 50%;
+            margin:auto;
+            box-shadow:0 0 5px #808080;
+            overflow:hidden;
+        }
+        #headimgfile {
+        display:none;
+        }
+        #headimgsrc {
+            width:200px;
+            height:200px;
+            z-index:10;
+        }
+    </style>
+    <script>
+
+        $(function () {
+            function GetQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+                if (r != null) return unescape(r[2]); return null;
+            }
+            var userid = GetQueryString("userid");
+            $("#lookheadimg").click(function () {
+
+                $("#headimgfile").click();
+                $("#headimgfile").on("change", function () {
+
+                    var imgurl = $(this).val();
+                    alert(imgurl)
+                    var a = imgurl.split("\\");
+                    imgname = a[a.length - 1];
+                    var objUrl = getObjectURL(this.files[0]);
+                    //form.append("file",objUrl)
+                    //获取图片的路径，该路径不是图片在本地的路径
+
+                    if (objUrl) {
+                        $("#headimgsrc").attr("src", objUrl); //将图片路径存入src中，显示出图片
+                    }
+                });
+            })
+            function getObjectURL(file) {
+                var url = null;
+                if (window.createObjectURL != undefined) { // basic
+                    url = window.createObjectURL(file);
+                }
+                else if (window.URL != undefined) {
+                    // mozilla(firefox)火狐
+                    url = window.URL.createObjectURL(file);
+                }
+                else if (window.webkitURL != undefined) {
+
+                    // webkit or chrome谷歌
+                    url = window.webkitURL.createObjectURL(file);
+                }
+                return url;
+            }
+
+            $("#upimgfile").click(function () {
+                var form = new FormData();
+                var obj = document.getElementById("uploadfile");
+                var objfile = obj[0].files[0];
+                form.append("file", objfile);
+                form.append("userid", userid);
+                $.ajax({
+                    url: 'http://localhost:55531/ashx/Upheadimg.ashx',
+                    type: 'post',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function (da) {
+
+                        if (da > 0) {
+                            alert("上传成功")
+                            $("#img").attr("scr", "../img/da[0][]")
+                        }
+                        else {
+                            alert("未知的错误")
+                        }
+
+                    },
+                    error: function (da) {
+
+                        alert("失败")
+                    }
+                })
+            })
+
+            $("#offheadimg").click(function () {
+
+                javascript: history.go(-1);
+
+            })
+        })
+        
+    </script>
+      <style>
+     
+        .white_content { 
+            position: absolute; 
+            top: 25%; 
+            left: 25%; 
+            width: 55%; 
+            height: 55%; 
+            padding: 20px; 
+            border: 10px solid orange; 
+            background-color: white; 
+            z-index:1002; 
+            overflow: auto; 
+        }
+        #y-top {
+            padding-top:60px;
+            width:60%;
+            margin:auto;
+            text-align:center;
+            padding-left:200px;
+        }
+        #y-bottom {
+            width:60%;
+            margin:auto;
+            margin-top:30px;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body ng-app="Myapp">
+
+            <div id="y-bottom" ng-controller="Myctrl">
+              
+                     <div id="headimg_main">
+            <div id="headimg_head"><h3>上传您的头像</h3></div>
+
+                <div id="lookheadimg">
+                    <img src="" id="headimgsrc" />
+                </div>
+                <p style="text-align:center;font-size:18px;margin-top:20px;color:#808080">点击上方相框即可上传图片</p>
+                <form id="uploadfile" enctype="multipart/form-data" action="../ashx/Upheadimg.ashx" method="post">
+                    <input type="file" id="headimgfile" name="fileData" class="btn btn-success" />
+                </form>
+                    <p style="text-align:center;">
+                        <button id="upimgfile" class="btn btn-success">上传</button>
+                        <button id="offheadimg" class="btn btn-success">返回</button>
+                    </p>
+        </div>
+                  <table class=" table">
+                    <tr>
+                        <td>商品名</td>
+                        <td>
+                            <input type="text" ng-model="Goods" /></td>
+                    </tr>
+                    <tr>
+                        <td>价格</td>
+                        <td>
+                            <input type="text" ng-model="prices" /></td>
+                    </tr>
+                    <tr>
+                        <td>数量</td>
+                        <td>
+                            <input type="text" ng-model="nums" /></td>
+                    </tr>
+                    <tr>
+                        <td>介绍</td>
+                        <td>
+                            <input type="text"  ng-model="jieshaos" /></td>
+                    </tr>
+                    <tr>
+                        <td>地址</td>
+                        <td>
+                            <input type="text" ng-model="dizhis" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="添加" class="btn btn-group" ng-click="tianjia()" /></td>
+                    </tr>
+                </table>
+            </div>
+
+</body>
+     <script src="js/Admin/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="js/Admin/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="js/Admin/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <script src="js/Admin/custom-scripts.js"></script>
+
+</html>

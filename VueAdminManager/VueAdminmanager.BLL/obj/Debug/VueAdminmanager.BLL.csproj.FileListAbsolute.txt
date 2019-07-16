@@ -1,0 +1,12 @@
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\VueAdminmanager.BLL.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\VueAdminmanager.BLL.pdb
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\VueAdminManager.DAL.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\VueAdminmanager.Model.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\VueAdminManager.DAL.pdb
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\VueAdminmanager.Model.pdb
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\obj\Debug\VueAdminmanager.BLL.csprojResolveAssemblyReference.cache
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\obj\Debug\VueAdminmanager.BLL.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\obj\Debug\VueAdminmanager.BLL.pdb
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\EntityFramework.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\EntityFramework.xml
+D:\卓越项目\VueAdminManager\VueAdminmanager.BLL\bin\Debug\zh-Hans\EntityFramework.resources.dll

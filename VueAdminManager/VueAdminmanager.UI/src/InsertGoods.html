@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+         <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="../JS/jquery.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"/>
+        <script src="../JS/axios.min.js"></script>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <title></title>
+</head>
+<body>
+       <div style="margin-left:20px; width:20%;" id="app" >
+       
+        <form name="ff" id="fff" enctype="multipart/form-data">
+            
+              <p>
+                  
+                  <label>商品:</label>
+                  <input type="text" name="GoodsName" />
+                  </p>
+            <p>
+                  <label>图片:</label>
+               <input type="file" name="files" />
+                             <!--<input type="file" name="name" v-model="good.img"/>-->
+            </p>
+                
+            <p>
+                 <label>类别:</label>
+                        <select class="el-select-dropdown" name="TypeID" >
+            <option class="el-option" v-bind:value="0">
+              --请选择--
+            </option>
+            <option  class="el-option" v-for="good in goods"  v-bind:value="good.TypeID" >
+                {{good.TypeName}}
+            </option>
+                           
+        </select>
+            </p>
+             <p>
+                  <label>存放地点:</label>
+            <select class="el-select-dropdown"  name="CFID">
+            <option class="el-option" v-bind:value="0">
+              --请选择--
+            </option>
+            <option  class="el-option" v-for="good in cf"  v-bind:value="good.CFID"  >
+                {{good.CFPlaces}}
+            </option>
+        </select>
+            </p>
+            <p>
+                <input type="button" class="el-button" value="添加商品" />
+            </p>
+        </form>
+</div>
+    <script>
+        $(function () {
+            $("input[type=button]").click(function () {
+                var form = new FormData($("#fff")[0]);
+                $.ajax({
+                    url: "../ashx/InsertGoodsInfo.ashx",
+                    data: form,
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data == "ok") {
+                            location.href="GoodsInfo.html";
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+    <script>
+  
+        new Vue({
+            el: "#app",
+            data: {
+                goods:[],
+                cf:[],
+                insertUrl:"../ashx/InsertGoodsInfo.ashx",
+                getTypeUrl:"../ashx/GetTypes.ashx",
+                getCFPlaces:"../ashx/CFplacesInfo.ashx",
+                form: {
+                    inerstor: '',
+                    processData: false,
+        contentType: false,
+                }
+            },
+            created: function () {
+                this.GETGoodsType();
+                this.GetCFplaces();
+            },  
+            methods: {
+                //Insert: function () {
+               
+                //    var form = new FormData($("#fff")[0]);
+                //    axios.get(
+                //        this.insertUrl,
+                //        form).then(
+                //                   function(res){if(res.data=="ok"){
+                //                       location.href="GoodsInfo.html";
+                //                   }}
+                //                   ).catch(
+                //                       err=>{console.log(err)}
+                //                   );
+                //},
+                GETGoodsType:function(){
+                    axios.get(
+                        this.getTypeUrl
+                        ).then(
+                        result=>{this.goods = result.data
+                        }
+                        ).catch(
+                        err=>{console.log(err)}
+                        );
+                },
+                GetCFplaces:function(){
+                    axios.get(this.getCFPlaces).then(result=>{this.cf=result.data}).catch(err=>{console.log(err)})
+                }
+
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>LuxuryHotel a Hotel Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Rubik:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+       <script src="https://cdn.staticfile.org/angular.js/1.7.6/angular.min.js"></script>
+      <script src="https://cdn.bootcss.com/angular.js/1.7.0/angular-route.min.js"></script>
+    <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+      <link href="fonts/css/style.css" rel="stylesheet" />
+      <script src="fonts/js/swiper.min.js"></script>
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="css/style.css">
+      <script type="text/javascript">
+          var app = angular.module("Myapp", []);
+          var url = location.href;
+          var n1 = url.length;//地址的总长度10
+          var n2 = url.indexOf("=");//取得=号的位置
+          var id = decodeURI(url.substr(n2 + 1, n1 - n2));
+          app.controller("Myctrl", function ($scope, $http) {
+              $scope.value1 = "登录";
+
+              $http({
+                  method: 'post',
+                  url: "ashx/GoodsInfoShow2.ashx",
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                  transformRequest: function (obj) {
+                      var str = [];
+                      for (var p in obj) {
+                          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                      }
+                      return str.join("&");
+                  }
+              })
+              .then(function (da) {
+                  $scope.arr = da.data;
+                  
+              })
+              $scope.aaa = function (index) {
+                  if ($scope.Tel == "登录") {
+                      alert("请先登录");
+                  }
+                  else {
+                      $scope.Tel = id;
+                      location.href = "BuyGoods.html?" + "Goodsid=" + $scope.arr[index].GoodsID;
+                  }
+                 
+              }
+          })
+          app.controller("Myctrl2", function ($scope, $http) {
+              $scope.tel = id;
+              $scope.value1 = "登录";
+
+              if ($scope.tel != url) {
+                  //location.href = "Personal.html"
+                  $scope.value1 = $scope.tel;
+              }
+              else {
+                  $scope.value1 = "登录";
+              }
+              $scope.ddd = function () {
+                  location.href = "index.html?" + "tel=" + $scope.value1;
+              }
+              $scope.bbb = function () {
+                  location.href = "rooms.html?" + "tel=" + $scope.value1;
+              }
+              $scope.ccc = function () {
+                  if ($scope.value1 == "登录") {
+                      alert("请先登录");
+                  }
+                  else {
+                      location.href = "Orders.html?" + "tel=" + $scope.value1;
+                  }
+              }
+          })
+          window.onload = function () {
+              var swiper = new Swiper('.swiper-container', {
+                  autoplay: false,
+                  speed: 1000,
+                  autoplayDisableOnInteraction: false,
+                  loop: true,
+                  centeredSlides: true,
+                  slidesPerView: 2,
+                  pagination: '.swiper-pagination',
+                  paginationClickable: true,
+                  prevButton: '.swiper-button-prev',
+                  nextButton: '.swiper-button-next',
+                  onInit: function (swiper) {
+                      swiper.slides[2].className = "swiper-slide swiper-slide-active";
+                  },
+                  breakpoints: {
+                      668: {
+                          slidesPerView: 1,
+                      }
+                  }
+              });
+          }
+
+
+</script>
+  </head>
+  <body ng-app="Myapp">
+    
+    <header role="banner">
+     
+      <nav class="navbar navbar-expand-md navbar-dark bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="index.html"><img src="images/logo.png" style="width:200px;height:100px;" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse navbar-light" id="navbarsExample05"  ng-controller="Myctrl2">
+            <ul class="navbar-nav ml-auto pl-lg-5 pl-0">
+                <li class="nav-item">
+                <a class="nav-link " ng-click="ddd()">首页</a>
+              </li>
+              <li class="nav-items">
+                <a class="nav-link" ng-click="bbb()">酒店</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" >旅游</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" ng-click="ccc()">我的订单</a>
+              </li>
+                  <li class="nav-item cta">
+                <a class="nav-link" href="Login.html"><span ng-model="Tel">{{value1}}</span></a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- END header -->
+
+    <section class="site-hero site-hero-innerpage overlay" data-stellar-background-ratio="0.5" style="background-image: url(images/big_image_1.jpg);">
+      <div class="container">
+        <div class="row align-items-center site-hero-inner justify-content-center">
+          <div class="col-md-12 text-center">
+
+            <div class="mb-5 element-animate">
+               <div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide swiper-slide-center none-effect">
+				<a href="#">
+					<img src="img/banner001.jpg" />
+				</a>
+				<div class="layer-mask"></div>
+			</div>
+			<div class="swiper-slide">
+				<a href="#">
+					<img src="img/banner002.jpg" />
+				</a>
+				<div class="layer-mask"></div>
+			</div>
+			<div class="swiper-slide">
+				<a href="#">
+					<img src="img/banner003.jpg" />
+				</a>
+				<div class="layer-mask"></div>
+			</div>
+			<div class="swiper-slide">
+				<a href="#">
+					<img src="img/banner004.jpg" />
+				</a>
+				<div class="layer-mask"></div>
+			</div>
+			<div class="swiper-slide">
+				<a href="#">
+					<img src="img/banner005.jpg" />
+				</a>
+				<div class="layer-mask"></div>
+			</div>
+		</div>
+		<div class="button">
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+		</div>
+	</div>s
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+
+    <section class="site-section bg-light">
+      <div class="container">
+        
+        <div class="row mb-5" ng-controller="Myctrl">
+          <div class="col-md-4" ng-repeat="x in arr">
+            <div class="post-entry">
+              <a href="blog-single.html"><img src="images/{{x.img}}" alt="Image placeholder" class="img-fluid"></a>
+              <div class="body-text">
+                <div class="category">{{x.Price}}元/周</div>
+                <h3 class="mb-3"><a href="blog-single.html">{{x.Goods}}</a></h3>
+                <p class="mb-4" style="font-size:10px">{{x.Jieshao}}</p>
+                  <p><input type="submit" class="btn btn-primary btn-outline-primary btn-sm" value="预订" ng-click="aaa($index)" /></p>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+   
+   
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-4">
+            <h3>电话热线</h3>
+            <p>24小时打给我们</p>
+            <p class="lead"><a href="tel://">+ 1 332 3093 323</a></p>
+          </div>
+          <div class="col-md-4">
+            <h3>联系我们</h3>
+            <p>跟随我们最新消息</p>
+            <p>
+              <a href="#" class="pl-0 p-3"><span class="fa fa-facebook"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-twitter"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-instagram"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-vimeo"></span></a>
+              <a href="#" class="p-3"><span class="fa fa-youtube-play"></span></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- END footer -->
+    
+    <!-- loader -->
+    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-migrate-3.0.0.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

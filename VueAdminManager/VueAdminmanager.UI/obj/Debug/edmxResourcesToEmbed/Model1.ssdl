@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MYAdminManagerModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MYAdminManagerModelStoreContainer">
+    <EntitySet Name="AdminUser" EntityType="MYAdminManagerModel.Store.AdminUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Buyer" EntityType="MYAdminManagerModel.Store.Buyer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CFplace" EntityType="MYAdminManagerModel.Store.CFplace" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="department" EntityType="MYAdminManagerModel.Store.department" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Goods" EntityType="MYAdminManagerModel.Store.Goods" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GoodsType" EntityType="MYAdminManagerModel.Store.GoodsType" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__Goods__TypeID__1ED998B2" Association="MYAdminManagerModel.Store.FK__Goods__TypeID__1ED998B2">
+      <End Role="GoodsType" EntitySet="GoodsType" />
+      <End Role="Goods" EntitySet="Goods" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AdminUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+    <Property Name="UserPhone" Type="nvarchar" MaxLength="11" />
+    <Property Name="UserPwd" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Buyer">
+    <Key>
+      <PropertyRef Name="BuyID" />
+    </Key>
+    <Property Name="BuyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BuyerName" Type="nvarchar" MaxLength="20" />
+    <Property Name="HZTime" Type="date" />
+  </EntityType>
+  <EntityType Name="CFplace">
+    <Key>
+      <PropertyRef Name="CFID" />
+    </Key>
+    <Property Name="CFID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CFPlaces" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="DepartID" />
+    </Key>
+    <Property Name="DepartID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Departments" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Goods">
+    <Key>
+      <PropertyRef Name="GoodsID" />
+    </Key>
+    <Property Name="GoodsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TypeID" Type="int" />
+    <Property Name="GoodsName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="GoodsType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK__Goods__TypeID__1ED998B2">
+    <End Role="GoodsType" Type="MYAdminManagerModel.Store.GoodsType" Multiplicity="0..1" />
+    <End Role="Goods" Type="MYAdminManagerModel.Store.Goods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="Goods">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--生成过程中发现错误:
+      警告 6013: 表/视图“MYAdminManager.dbo.Admins”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="Admins">
+        <Property Name="AdminID" Type="int" />
+        <Property Name="AdminPwd" Type="nvarchar" MaxLength="50" />
+      </EntityType>-->
+</Schema>

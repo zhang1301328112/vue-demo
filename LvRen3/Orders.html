@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style>
+        #navbarsExample05 {
+            width:100%;
+            margin-bottom:20px;
+            height:45px;
+        }
+        #navbarsExample05 ul li {
+        list-style:none;
+        margin-left:20px;
+        float:left;
+        }
+      #heads  span {
+         padding-left:7%;
+         padding-right:7%;
+            text-align:center;
+            width:80px;
+        }
+        #content {
+            border:1px solid red;
+        }
+        #content span {
+        padding-left:6%;
+         padding-right:6%;
+            text-align:center;
+            width:80px;
+        }
+        table {
+            width:100%;
+        border:1px solid black;
+        }
+            table th {
+                text-align:center;
+                width:15%;
+                border:1px solid black;
+            }
+            table td {
+                text-align:center;
+                width:15%;
+                border:1px solid black;
+            }
+    </style>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/magnific-popup.css" rel="stylesheet" />
+    <link href="css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="css/animate.css" rel="stylesheet" />
+        <script src="https://cdn.staticfile.org/angular.js/1.7.6/angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module("Myapp", []);
+        var url = location.href;
+        var n1 = url.length;//地址的总长度10
+        var n2 = url.indexOf("=");//取得=号的位置
+        var id = decodeURI(url.substr(n2 + 1, n1 - n2));
+        var app = angular.module("Myapp", []);
+        app.controller("Myctrl", function ($scope, $http) {
+           
+            $http({
+                method: 'post',
+                url: "ashx/OrderForm.ashx",
+                data:{'id':id},
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return str.join("&");
+                }
+            })
+            .then(function (da) {
+                $scope.arr = da.data;
+            })
+            $scope.shanchu = function (index) {
+                alert(1)
+                $scope.data2 =
+                    {
+                        orderid:$scope.arr[index].OIID
+                    }
+
+                $http({
+                    method: 'post',
+                    url: "ashx/Delete.ashx",
+                    data:$scope.data2,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj) {
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        }
+                        return str.join("&");
+                    }
+                })
+           .then(function (da) {
+               alert("删除成功！");
+               $http({
+                   method: 'post',
+                   url: "ashx/OrderForm.ashx",
+                   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                   transformRequest: function (obj) {
+                       var str = [];
+                       for (var p in obj) {
+                           str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                       }
+                       return str.join("&");
+                   }
+               })
+           .then(function (da) {
+               $scope.arr = da.data;
+           })
+           })
+                
+            }
+        })
+        app.controller("Myctrl2", function ($scope, $http) {
+            $scope.aaa = function () {
+                location.href = "index.html?" + "tel=" + $scope.value1;
+            }
+            $scope.ccc = function () {
+                location.href = "blog.html?" + "tel=" + $scope.value1;
+            }
+            $scope.bbb = function () {
+                location.href = "rooms.html?" + "tel=" + $scope.value1;
+            }
+
+        })
+           
+    </script>
+</head>
+<body ng-app="Myapp">
+    <div  id="navbarsExample05" ng-controller="Myctrl2">
+        <ul>
+              <li class="nav-item cta">
+                <a class="nav-link" ng-click="aaa()">返回</a>
+              </li>
+            
+              <li class="nav-item cta">
+                <a class="nav-link" ng-click="bbb()">酒店</a>
+              </li>
+              <li class="nav-item cta">
+                <a class="nav-link" ng-click="ccc()">旅游</a>
+              </li>
+              <li class="nav-item cta">
+                <a class="nav-link" href="Login.html"><span ng-model="Tel">{{value1}}</span></a>
+              </li>
+            </ul>
+    </div>
+    
+    <div ng-controller="Myctrl" style="width:100%">
+        <form>
+          <table>
+              <thead>
+                  <tr>
+                      <th>编号</th>
+                      <th>图片</th>
+                      <th>商品</th>
+                      <th>价格</th>
+                      <th>数量/人次</th>
+                      <th>操作</th>
+                  </tr>
+              </thead>
+              <tbody>
+               
+                     <tr id="hang" ng-repeat="x in arr">
+                      <td>{{x.OIID}}</td>
+                      <td><img src="images/{{x.img}}" style="width:70px;height:70px;"/></td>
+                      <td>{{x.GoodsName}}</td>
+                      <td>{{x.Price}}</td>
+                      <td>{{x.num}}</td>
+                      <td><input type="submit" value="删除" style="background:space;border:none;" ng-click="shanchu($index)" /></td>
+                  </tr>
+                  
+              </tbody>
+          </table>
+        </form>
+        
+                  
+    </div>
+</body>
+</html>

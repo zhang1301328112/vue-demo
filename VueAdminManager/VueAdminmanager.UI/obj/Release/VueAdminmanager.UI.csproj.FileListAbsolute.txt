@@ -1,0 +1,9 @@
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\bin\VueAdminmanager.UI.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\bin\VueAdminmanager.UI.pdb
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\bin\EntityFramework.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\bin\Newtonsoft.Json.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\bin\EntityFramework.xml
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\bin\Newtonsoft.Json.xml
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\bin\zh-Hans\EntityFramework.resources.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\obj\Release\VueAdminmanager.UI.dll
+D:\卓越项目\VueAdminManager\VueAdminmanager.UI\obj\Release\VueAdminmanager.UI.pdb

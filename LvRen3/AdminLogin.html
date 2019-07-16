@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>纸叠效果会员登录界面模板</title>
+          <script src="https://cdn.staticfile.org/angular.js/1.7.6/angular.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/adminlogin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/adminlogin/css/body.css"/> 
+        <script type="text/javascript">
+            var app = angular.module("myApp", []);
+            app.controller("Myctrl", function ($scope, $http) {
+
+                $scope.aaa = function () {
+                    $scope.data2 =
+                        {
+                            adminss: $scope.id,
+                            pwd: $scope.pwd
+                        }
+                    $http({
+                        method: 'post',
+                        url: "ashx/AdminLogin.ashx",
+                        data: $scope.data2,
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        transformRequest: function (obj) {
+                            var str = [];
+                            for (var p in obj) {
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            }
+                            return str.join("&");
+                        }
+                    })
+                .then(function (req) {
+                    if (req.data == 1) {
+                        alert("登陆成功！")
+                        location.href = "Admin.html?" + "id=" + $scope.id;
+                    }
+                    else {
+                        alert("登陆失败")
+                    }
+                }, function () {
+                    alert("错");
+                });
+
+                }
+
+            });
+    </script>
+</head>
+<body ng-app="myApp">
+<div class="container" ng-controller="Myctrl">
+	<section id="content">
+		<form>
+			<h1>管理员登录</h1>
+			<div>
+				<input type="text" placeholder="管理员账号" required="" id="username" ng-model="id" />
+			</div>
+			<div>
+				<input type="password" placeholder="密码" required="" id="password" ng-model="pwd" />
+			</div>
+			 <div class="">
+				<span class="help-block u-errormessage" id="js-server-helpinfo">&nbsp;</span>			</div> 
+			<div>
+				<!-- <input type="submit" value="Log in" /> -->
+				<input type="submit" value="登录" class="btn btn-primary" id="js-btn-login" ng-click="aaa()" />
+				<a href="#">忘记密码?</a>
+				<!-- <a href="#">Register</a> -->
+			</div>
+		</form><!-- form -->
+		 <div class="button">
+			<span class="help-block u-errormessage" id="Span1">&nbsp;</span>
+
+		</div> <!-- button -->
+	</section><!-- content -->
+</div>
+<!-- container -->
+
+
+<br><br><br><br>
+</body>
+</html>
